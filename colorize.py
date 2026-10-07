@@ -26,7 +26,7 @@ ICM_ITERATIONS = 10
 
 # Controls how smoothly predicted colors spread between superpixels.
 CHROMA_SMOOTH_SIGMA = 12.0
-
+NEIGHBOR_THRESHOLD=20.0
 
 def smooth_segment_chroma(
     values,
@@ -154,7 +154,8 @@ def colorize(input_path, output_path):
 
     graph = neighbor_graph(
         labels,
-        features
+        features,
+        threshold=NEIGHBOR_THRESHOLD
     )
 
     print("Applying MRF / ICM smoothing...")
