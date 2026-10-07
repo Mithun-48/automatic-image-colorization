@@ -1,0 +1,11 @@
+DATASET NOTE
+
+The original report used 216 Yellowstone landscape photographs:
+98 training images and 118 test images.
+
+For your implementation, place your own legally obtained COLOR landscape
+training images in data/train/. Do not put grayscale images in training.
+
+For testing, put GRAYSCALE images in data/test/.
+
+The code does not automatically download the old Flickr dataset.
