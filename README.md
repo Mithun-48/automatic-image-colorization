@@ -1,61 +1,54 @@
 # Automatic Image Colorization
 
-A practical implementation of the methodology described in the project report:
-YUV color space -> SLIC superpixels -> 10x10 luminance patches -> 2D FFT features
--> two Support Vector Regressors (U and V) -> MRF-style smoothing with ICM
--> RGB output.
+A practical implementation of an automatic image colorization system based on the methodology described in the project report.
 
-## Project structure
+The system takes a grayscale landscape image and predicts its color automatically using image features, Support Vector Regression (SVR), and Markov Random Field (MRF) based smoothing.
 
-- data/train/ : training COLOR images
-- data/test/  : grayscale test images
-- models/     : trained SVR models
-- outputs/    : generated colorized images
-- train.py    : train the two SVR models
-- colorize.py : colorize a grayscale image
-- utils.py    : shared image/feature functions
+## Methodology
 
-## Windows setup
+The colorization pipeline follows these steps:
 
-```powershell
-py -3.12 -m venv venv
-venv\Scripts\activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-```
+**RGB image**
+→ **YUV color space**
+→ **Y (luminance) channel**
+→ **SLIC superpixel segmentation**
+→ **10×10 luminance patches**
+→ **2D FFT features**
+→ **Two SVR models for U and V chrominance**
+→ **MRF / ICM smoothing**
+→ **YUV to RGB conversion**
+→ **Colorized image**
 
-## 1. Add data
+The input to the model is the luminance (Y) channel. The two SVR models independently predict the U and V chrominance values for each superpixel.
 
-Put color training images in:
+MRF-based smoothing is then applied to encourage consistent colors between similar neighboring superpixels.
 
-data/train/
+---
 
-Put grayscale images to test in:
+## Project Structure
 
-data/test/
-
-For a first demo, even 20-50 landscape images are enough to verify the pipeline.
-For meaningful results, use a larger and visually consistent dataset.
-
-## 2. Train
-
-```powershell
-python train.py
-```
-
-## 3. Colorize
-
-```powershell
-python colorize.py --input data/test/example.jpg
-```
-
-The result is written to outputs/.
-
-## Parameters based on the report
-
-SVR epsilon = 0.0625
-SVR C = 0.125
-ICM gamma = 2.0
-
-The original report used 98 training and 118 test Yellowstone landscape images.
-This implementation does not assume those files are available.
+```text
+automatic_image_colorization/
+│
+├── data/
+│   ├── train/              # Color training images
+│   ├── test/               # Grayscale test images
+│   └── test_original/      # Original color versions for evaluation
+│
+├── models/
+│   ├── u_svr.joblib        # Trained U chrominance model
+│   └── v_svr.joblib        # Trained V chrominance model
+│
+├── outputs/
+│   └── evaluation/         # Generated colorized test images
+│
+├── results/
+│   └── metrics.csv         # Evaluation metrics
+│
+├── colorize.py             # Colorizes a grayscale image
+├── train.py                # Trains the U and V SVR models
+├── evaluate.py             # Evaluates the model
+├── utils.py                # Image processing and feature extraction
+├── download_dataset.py     # Downloads and prepares the dataset
+├── requirements.txt        # Python dependencies
+└── README.md
