@@ -20,13 +20,13 @@ from utils import (
 MODEL_DIR = Path("models")
 OUTPUT_DIR = Path("outputs")
 
-ICM_GAMMA = 0.05
+ICM_GAMMA = 2.0
 ICM_SIGMA = 1.0
 ICM_ITERATIONS = 10
 
 # Controls how smoothly predicted colors spread between superpixels.
 CHROMA_SMOOTH_SIGMA = 12.0
-
+NEIGHBOR_THRESHOLD=5.0
 
 def smooth_segment_chroma(
     values,
@@ -154,7 +154,8 @@ def colorize(input_path, output_path):
 
     graph = neighbor_graph(
         labels,
-        features
+        features,
+        threshold=NEIGHBOR_THRESHOLD
     )
 
     print("Applying MRF / ICM smoothing...")

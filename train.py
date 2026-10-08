@@ -18,7 +18,7 @@ from utils import (
 TRAIN_DIR = Path("data/train")
 MODEL_DIR = Path("models")
 
-SVR_EPSILON = 0.0625
+SVR_EPSILON = 0.01
 SVR_C = 0.125
 SVR_GAMMA = 2.0
 
