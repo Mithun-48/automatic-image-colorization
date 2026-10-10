@@ -7,3 +7,19 @@ data/train/*
 data/test/*
 data/test_original/*
 results/*
+# Local datasets
+data/train/
+data/test/
+data/test_original/
+
+# Python environment
+venv/
+__pycache__/
+*.py[cod]
+
+# Local model files
+models/*.joblib
+models/opencv_colorization/
+
+# Local backup
+colorize_dnn_backup.py

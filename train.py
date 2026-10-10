@@ -4,6 +4,8 @@ import joblib
 import numpy as np
 from tqdm import tqdm
 from sklearn.svm import SVR
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
 from utils import (
     load_rgb,
@@ -18,7 +20,7 @@ from utils import (
 TRAIN_DIR = Path("data/train")
 MODEL_DIR = Path("models")
 
-SVR_EPSILON = 0.01
+SVR_EPSILON = 0.0625
 SVR_C = 0.125
 SVR_GAMMA = 2.0
 
@@ -139,12 +141,15 @@ def train_model(x, target, name):
         target
     )
 
-    model = SVR(
+    model = make_pipeline(
+    StandardScaler(),
+    SVR(
         kernel="rbf",
         C=SVR_C,
         epsilon=SVR_EPSILON,
-        gamma=SVR_GAMMA,
-    )
+        gamma="scale",
+            ),
+            )
 
     print()
     print(

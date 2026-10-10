@@ -1,5 +1,5 @@
 numpy
-opencv-python
+opencv-python<5
 scikit-image
 scikit-learn
 joblib

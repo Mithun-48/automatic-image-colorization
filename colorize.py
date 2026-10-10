@@ -179,20 +179,10 @@ def colorize(input_path, output_path):
     )
 
     print("Creating smooth chrominance fields...")
+    u_img = u_smooth[labels]
+    v_img = v_smooth[labels]
 
-    u_img = smooth_segment_chroma(
-        u_smooth,
-        labels,
-        centers
-    )
-
-    v_img = smooth_segment_chroma(
-        v_smooth,
-        labels,
-        centers
-    )
-
-    # Keep chrominance within a safe range.
+ # Keeping chrominance within a safe range.
     u_img = np.clip(
         u_img,
         -0.5,
