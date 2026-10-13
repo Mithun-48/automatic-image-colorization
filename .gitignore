@@ -14,6 +14,7 @@ data/test_original/
 
 # Python environment
 venv/
+.venv/
 __pycache__/
 *.py[cod]
 
@@ -23,3 +24,21 @@ models/opencv_colorization/
 
 # Local backup
 colorize_dnn_backup.py
+
+# Python environment and cache
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Datasets and generated results
+data/
+outputs/
+results/
+
+# Trained models and backups
+models/*.joblib
+models/old_svr_backup/
+
+# Keep pretrained DNN files local
+models/opencv_colorization/
